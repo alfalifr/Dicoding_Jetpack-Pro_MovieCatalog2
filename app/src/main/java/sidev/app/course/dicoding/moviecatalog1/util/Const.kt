@@ -20,8 +20,8 @@ object Const {
     }
 
     const val ENDPOINT_ROOT = "https://api.themoviedb.org/3"
-    const val ENDPOINT_MOVIE = "$ENDPOINT_ROOT/movie"
-    const val ENDPOINT_TV = "$ENDPOINT_ROOT/tv"
+    private const val ENDPOINT_MOVIE = "$ENDPOINT_ROOT/movie"
+    private const val ENDPOINT_TV = "$ENDPOINT_ROOT/tv"
     //const val ENDPOINT_MOVIE_POPULAR = "$ENDPOINT_MOVIE/popular"
     //const val ENDPOINT_TV_POPULAR = "$ENDPOINT_MOVIE/popular"
     const val PATH_TV_POPULAR = "tv/popular"
@@ -53,7 +53,6 @@ object Const {
 
     const val KEY_API_KEY = "api_key"
     const val KEY_PAGE = "page"
-    const val KEY_POPULAR = "popular"
 
     const val KEY_TYPE = "type"
     const val KEY_SHOW = "show"
@@ -71,5 +70,4 @@ object Const {
     const val KEY_BACKDROP = "backdrop_path"
     const val KEY_MOVIE_DURATION = "runtime"
 
-    const val DEFAULT_TIMEOUT = 10000L //in millisecs
 }

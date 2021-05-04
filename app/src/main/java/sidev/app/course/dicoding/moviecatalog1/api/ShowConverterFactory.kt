@@ -19,8 +19,8 @@ object ShowConverterFactory: Converter.Factory() {
         retrofit: Retrofit
     ): Converter<ResponseBody, *>? {
         //List<Show>::class.java
-        return when {
-            type == ShowDetail::class.java -> ShowDetailConverter
+        return when (type) {
+            ShowDetail::class.java -> ShowDetailConverter
             else -> gsonFactory.responseBodyConverter(type, annotations, retrofit)
         }
     }

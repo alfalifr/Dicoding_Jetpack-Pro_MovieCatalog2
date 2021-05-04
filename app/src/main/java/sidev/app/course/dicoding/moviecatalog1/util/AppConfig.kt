@@ -3,7 +3,6 @@ package sidev.app.course.dicoding.moviecatalog1.util
 import androidx.test.espresso.IdlingResource
 import androidx.test.espresso.idling.CountingIdlingResource
 import sidev.app.course.dicoding.moviecatalog1.datasource.ShowDataSource
-import sidev.app.course.dicoding.moviecatalog1.datasource.ShowRemoteRetrofitSource
 import sidev.app.course.dicoding.moviecatalog1.datasource.ShowRemoteSource
 import sidev.app.course.dicoding.moviecatalog1.model.Show
 import sidev.app.course.dicoding.moviecatalog1.model.ShowDetail

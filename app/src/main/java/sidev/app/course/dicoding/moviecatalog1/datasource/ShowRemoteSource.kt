@@ -38,11 +38,11 @@ object ShowRemoteSource: ShowDataSource {
         }
     }
 
-    private suspend fun getShowDetail(c: Context?, type: Const.ShowType, showId: String): Result<ShowDetail> = suspendCoroutine {
+    private suspend fun getShowDetail(c: Context?, type: Const.ShowType, showId: String): Result<ShowDetail> = suspendCoroutine { cont ->
         Util.httpGet(
             c,
             type.getDetailUrl(showId),
-            doOnNotSucces(it)
+            doOnNotSucces(cont)
         ) { _, content ->
             val json = JsonParser.parseString(content).asJsonObject
             val genreArray = json.getAsJsonArray(Const.KEY_GENRES)
@@ -58,7 +58,7 @@ object ShowRemoteSource: ShowDataSource {
                 json.getString(Const.KEY_OVERVIEW),
                 json.getString(Const.KEY_BACKDROP),
             )
-            it.resume(Success(showDetail))
+            cont.resume(Success(showDetail))
         }
     }
 
