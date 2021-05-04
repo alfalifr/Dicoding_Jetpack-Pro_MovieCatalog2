@@ -50,7 +50,7 @@ object Util {
     /**
      * Convenient way to give callback to retrofit [Call].
      */
-    fun <T> Call<T>.onResult(c: (Result<T>) -> Unit) {
+    private fun <T> Call<T>.onResult(c: (Result<T>) -> Unit) {
         enqueue(object : Callback<T> {
             /**
              * Invoked for a received HTTP response.
