@@ -23,7 +23,6 @@ class ShowDetailViewModel(
             owner: ViewModelStoreOwner,
             c: Application?,
             repo: ShowRepo,
-            //show: Show,
             type: Const.ShowType,
         ): ShowDetailViewModel = ViewModelProvider(
             owner,
@@ -34,12 +33,12 @@ class ShowDetailViewModel(
         ).get(ShowDetailViewModel::class.java)
     }
 
-    private val _showDetail: MutableLiveData<ShowDetail> = MutableLiveData()
+    private val mShowDetail: MutableLiveData<ShowDetail> = MutableLiveData()
     val showDetail: LiveData<ShowDetail>
-        get()= _showDetail
+        get()= mShowDetail
 
     fun downloadShowDetail(id: String, forceDownload: Boolean = false){
-        if(!forceDownload && _showDetail.value != null) return
+        if(!forceDownload && mShowDetail.value != null) return
         cancelJob()
         doOnPreAsyncTask()
         job = GlobalScope.launch(Dispatchers.IO) {
@@ -48,7 +47,7 @@ class ShowDetailViewModel(
                 Const.ShowType.TV -> repo.getTvDetail(ctx, id)
             }
             when(result){
-                is Success -> _showDetail.postValue(result.data)
+                is Success -> mShowDetail.postValue(result.data)
                 is Failure -> doCallNotSuccess(result.code, result.e)
             }
         }

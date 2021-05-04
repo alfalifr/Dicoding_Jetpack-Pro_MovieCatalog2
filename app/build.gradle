@@ -86,4 +86,5 @@ dependencies {
     testImplementation "androidx.arch.core:core-testing:2.1.0"
     testImplementation "org.robolectric:robolectric:4.5.1"
     testImplementation 'org.robolectric:shadows-httpclient:4.5' // For NoClassDefFoundException
+    testImplementation 'org.mockito:mockito-core:3.9.0'
 }

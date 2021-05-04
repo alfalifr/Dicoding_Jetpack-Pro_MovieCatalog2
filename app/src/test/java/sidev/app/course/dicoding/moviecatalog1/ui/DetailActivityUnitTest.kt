@@ -10,14 +10,12 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.After
 import org.junit.Assert.assertNotNull
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.annotation.Config
 import sidev.app.course.dicoding.moviecatalog1.R
 import sidev.app.course.dicoding.moviecatalog1.RobolectricTestingUtil
-import sidev.app.course.dicoding.moviecatalog1.datasource.ShowRemoteRetrofitSource
 import sidev.app.course.dicoding.moviecatalog1.repository.ShowDummyRepo
 import sidev.app.course.dicoding.moviecatalog1.repository.ShowErrorRepo
 import sidev.app.course.dicoding.moviecatalog1.ui.activity.DetailActivity
@@ -36,8 +34,8 @@ class DetailActivityUnitTest {
     private fun createActivity(): DetailActivity = Robolectric.buildActivity(
         DetailActivity::class.java,
         Intent().apply {
-            putExtra(Const.KEY_SHOW, AppConfig.dummyShowItem)
-            putExtra(Const.KEY_TYPE, AppConfig.dummyShowType)
+            putExtra(Const.KEY_SHOW, AppConfig.dummyMovieItem)
+            putExtra(Const.KEY_TYPE, Const.ShowType.MOVIE)
         }
     )
         .create()
@@ -45,11 +43,6 @@ class DetailActivityUnitTest {
         .resume()
         .visible()
         .get()
-
-    @Before
-    fun setup(){
-        AppConfig.defaultShowRemoteSource = ShowRemoteRetrofitSource
-    }
 
     @After
     fun finish(){
@@ -61,7 +54,7 @@ class DetailActivityUnitTest {
     fun showDetail(){
         // Use dummy repo because Robolectric can't integrate with Espresso Idling Resource.
         AppConfig.defaultShowRepo = ShowDummyRepo
-        val data = AppConfig.dummyShowDetail
+        val data = AppConfig.dummyMovieDetail
 
         val act = createActivity()
 

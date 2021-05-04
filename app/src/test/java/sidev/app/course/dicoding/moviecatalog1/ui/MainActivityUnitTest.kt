@@ -10,14 +10,12 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.After
 import org.junit.Assert.assertNotNull
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.annotation.Config
 import sidev.app.course.dicoding.moviecatalog1.R
 import sidev.app.course.dicoding.moviecatalog1.RobolectricTestingUtil
-import sidev.app.course.dicoding.moviecatalog1.datasource.ShowRemoteRetrofitSource
 import sidev.app.course.dicoding.moviecatalog1.repository.ShowDummyRepo
 import sidev.app.course.dicoding.moviecatalog1.repository.ShowEmptyRepo
 import sidev.app.course.dicoding.moviecatalog1.repository.ShowErrorRepo
@@ -40,11 +38,6 @@ class MainActivityUnitTest {
         .visible()
         .get()
 
-    @Before
-    fun setup(){
-        AppConfig.defaultShowRemoteSource = ShowRemoteRetrofitSource
-    }
-
     @After
     fun finish(){
         AppConfig.resetDefautlShowRepo()
@@ -55,7 +48,7 @@ class MainActivityUnitTest {
     fun getShowList(){
         // Use dummy repo because Robolectric can't integrate with Espresso Idling Resource.
         AppConfig.defaultShowRepo = ShowDummyRepo
-        val data = AppConfig.dummyShowItem
+        val data = AppConfig.dummyTvItem
 
         val act = createActivity()
 

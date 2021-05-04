@@ -34,12 +34,12 @@ class ShowListViewModel(
     }
 
     val showList: LiveData<List<Show>>
-        get()= _showList
-    private val _showList: MutableLiveData<List<Show>> = MutableLiveData()
+        get()= mShowList
+    private val mShowList: MutableLiveData<List<Show>> = MutableLiveData()
 
 
     fun downloadShowPopularList(forceDownload: Boolean = false){
-        if(!forceDownload && _showList.value != null) return
+        if(!forceDownload && mShowList.value != null) return
         cancelJob()
         doOnPreAsyncTask()
         job = GlobalScope.launch(Dispatchers.IO) {
@@ -48,7 +48,7 @@ class ShowListViewModel(
                 Const.ShowType.TV -> repo.getPopularTvList(ctx)
             }
             when(result){
-                is Success -> _showList.postValue(result.data)
+                is Success -> mShowList.postValue(result.data)
                 is Failure -> doCallNotSuccess(result.code, result.e)
             }
         }

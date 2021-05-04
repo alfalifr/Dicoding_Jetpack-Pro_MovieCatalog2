@@ -17,12 +17,9 @@ object ShowConverterFactory: Converter.Factory() {
         type: Type,
         annotations: Array<Annotation>,
         retrofit: Retrofit
-    ): Converter<ResponseBody, *>? {
-        //List<Show>::class.java
-        return when (type) {
-            ShowDetail::class.java -> ShowDetailConverter
-            else -> gsonFactory.responseBodyConverter(type, annotations, retrofit)
-        }
+    ): Converter<ResponseBody, *>? = when (type) {
+        ShowDetail::class.java -> ShowDetailConverter
+        else -> gsonFactory.responseBodyConverter(type, annotations, retrofit)
     }
 
     override fun requestBodyConverter(

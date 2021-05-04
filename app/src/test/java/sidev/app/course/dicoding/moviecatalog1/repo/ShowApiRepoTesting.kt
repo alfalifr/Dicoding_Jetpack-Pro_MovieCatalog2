@@ -2,87 +2,82 @@ package sidev.app.course.dicoding.moviecatalog1.repo
 
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
+import org.junit.BeforeClass
 import org.junit.Test
-import sidev.app.course.dicoding.moviecatalog1.datasource.ShowRemoteRetrofitSource
-import sidev.app.course.dicoding.moviecatalog1.model.Show
+import org.mockito.Mockito.*
+import sidev.app.course.dicoding.moviecatalog1.datasource.ShowDataSource
 import sidev.app.course.dicoding.moviecatalog1.repository.ShowApiRepo
 import sidev.app.course.dicoding.moviecatalog1.repository.Success
+import sidev.app.course.dicoding.moviecatalog1.util.AppConfig
 
 class ShowApiRepoTesting {
 
-    private val repo = ShowApiRepo(ShowRemoteRetrofitSource)
+    companion object {
+        // These props are lazy val so there's no way the value will be changed after initialization.
+        private val remoteSrc: ShowDataSource by lazy { mock(ShowDataSource::class.java) }
+        private val repo: ShowApiRepo by lazy { ShowApiRepo(remoteSrc) }
+
+        private val movie = AppConfig.dummyMovieItem
+        private val movieDetail = AppConfig.dummyMovieDetail
+        private val tv = AppConfig.dummyTvItem
+        private val tvDetail = AppConfig.dummyTvDetail
+
+        @BeforeClass
+        @JvmStatic
+        fun initSetup(): Unit = runBlocking {
+            `when`(remoteSrc.getPopularMovieList(any())).thenReturn(
+                Success(listOf(movie))
+            )
+            `when`(remoteSrc.getMovieDetail(any(), anyString())).thenReturn(
+                Success(movieDetail)
+            )
+
+            `when`(remoteSrc.getPopularTvList(any())).thenReturn(
+                Success(listOf(tv))
+            )
+            `when`(remoteSrc.getTvDetail(any(), anyString())).thenReturn(
+                Success(tvDetail)
+            )
+        }
+    }
 
     @Test
     fun getPopularMovieList(): Unit = runBlocking {
         val list = repo.getPopularMovieList(null)
+        verify(remoteSrc).getPopularMovieList(null)
         assert(list is Success)
-        (list as Success).data.verify()
+        val dataFromList = (list as Success).data.first()
+        assertEquals(movie, dataFromList)
     }
 
     @Test
     fun getPopularTvList(): Unit = runBlocking {
         val list = repo.getPopularTvList(null)
+        verify(remoteSrc).getPopularTvList(null)
         assert(list is Success)
-        (list as Success).data.verify()
+        val dataFromList = (list as Success).data.first()
+        assertEquals(tv, dataFromList)
     }
 
-    /**
-     * Data as of 26 April 2021.
-     */
     @Test
     fun getMovieDetail(): Unit = runBlocking {
-        val monsterHunterId= "458576"
-        val monsterHunterTitle= "Monster Hunter"
-        val monsterHunterTagline= "Behind our world, there is another."
-        val monsterHunterRelease= "2020-12-03"
+        val data = AppConfig.dummyMovieDetail
 
-        val detail = repo.getMovieDetail(null, monsterHunterId)
+        val detail = repo.getMovieDetail(null, data.show.id)
+        verify(remoteSrc).getMovieDetail(null, data.show.id)
         assert(detail is Success)
-        (detail as Success).data.apply {
-            assertEquals(monsterHunterId, show.id)
-            assertEquals(monsterHunterTitle, show.title)
-            assertEquals(monsterHunterRelease, show.release)
-            assertEquals(monsterHunterTagline, tagline)
-            assert(overview.isNotBlank())
-        }
+        val dataFromCall = (detail as Success).data
+        assertEquals(movieDetail, dataFromCall)
     }
 
-    /**
-     * Data as of 26 April 2021.
-     */
     @Test
     fun getTvDetail(): Unit = runBlocking {
-        val aotId = "1429"
-        val aotTitle = "Attack on Titan"
-        val aotRelease = "2013-04-07"
-        val aotOverviewPart = "humans were nearly exterminated by Titans"
+        val data = AppConfig.dummyTvDetail
 
-        val detail = repo.getTvDetail(null, aotId)
+        val detail = repo.getTvDetail(null, data.show.id)
+        verify(remoteSrc).getTvDetail(null, data.show.id)
         assert(detail is Success)
-        (detail as Success).data.apply {
-            assertEquals(aotId, show.id)
-            assertEquals(aotTitle, show.title)
-            assertEquals(aotRelease, show.release)
-            assert(overview.isNotBlank())
-            assert(overview.contains(aotOverviewPart))
-        }
-    }
-
-
-    private fun List<Show>.verify(){
-        assertNotNull(this)
-        assert(isNotEmpty())
-
-        val range = indices
-        val randomId = this[range.random()].id
-        val randomImg = this[range.random()].img
-        val randomTitle = this[range.random()].title
-        val randomRelease = this[range.random()].release
-
-        assert(randomId.isNotBlank())
-        assert(randomImg.startsWith("/"))
-        assert(randomTitle.isNotBlank())
-        assert(randomRelease.isNotBlank())
+        val dataFromCall = (detail as Success).data
+        assertEquals(tvDetail, dataFromCall)
     }
 }

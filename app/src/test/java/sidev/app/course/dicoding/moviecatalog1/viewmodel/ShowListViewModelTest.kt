@@ -1,54 +1,72 @@
 package sidev.app.course.dicoding.moviecatalog1.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import kotlinx.coroutines.runBlocking
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
-import org.junit.Before
-import org.junit.Test
-
+import org.junit.BeforeClass
 import org.junit.Rule
+import org.junit.Test
+import org.mockito.Mockito
+import org.mockito.Mockito.verify
 import sidev.app.course.dicoding.moviecatalog1.UnitTestingUtil.waitForValue
 import sidev.app.course.dicoding.moviecatalog1.repository.ShowRepo
-import sidev.app.course.dicoding.moviecatalog1.util.Const
+import sidev.app.course.dicoding.moviecatalog1.repository.Success
 import sidev.app.course.dicoding.moviecatalog1.util.AppConfig
-import sidev.lib.console.prin
-import sidev.lib.console.prine
+import sidev.app.course.dicoding.moviecatalog1.util.Const
 
 class ShowListViewModelTest {
 
+    companion object {
+        private val repo: ShowRepo by lazy { Mockito.mock(ShowRepo::class.java) }
+
+        private val movie = AppConfig.dummyMovieItem
+        private val tv = AppConfig.dummyTvItem
+
+        @BeforeClass
+        @JvmStatic
+        fun initSetup(): Unit = runBlocking {
+            Mockito.`when`(repo.getPopularMovieList(Mockito.any())).thenReturn(
+                Success(listOf(movie))
+            )
+            Mockito.`when`(repo.getPopularTvList(Mockito.any())).thenReturn(
+                Success(listOf(tv))
+            )
+        }
+    }
+
     private lateinit var vm: ShowListViewModel
-    private val repo: ShowRepo = AppConfig.defaultShowRepo
 
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    @Before
-    fun setup(){
-        vm = ShowListViewModel(null, repo, Const.ShowType.values().random())
-    }
-
     @Test
-    fun downloadShowPopularList() {
-        vm.onCallNotSuccess { code, e ->
-            prine("onCallNotSuccess code= $code e= $e")
-        }
+    fun downloadPopularMovieList(): Unit = runBlocking {
+        vm = ShowListViewModel(null, repo, Const.ShowType.MOVIE)
         vm.downloadShowPopularList()
 
         val list = vm.showList.waitForValue()
+
+        verify(repo).getPopularMovieList(null)
         assertNotNull(list)
         assert(list.isNotEmpty())
 
-        val range = list.indices
-        val randomId = list[range.random()].id
-        val randomImg = list[range.random()].img
-        val randomTitle = list[range.random()].title
-        val randomRelease = list[range.random()].release
+        val dataFromList = list.first()
+        assertEquals(movie, dataFromList)
+    }
 
-        assert(randomId.isNotBlank())
-        assert(randomImg.startsWith("/"))
-        assert(randomTitle.isNotBlank())
-        assert(randomRelease.isNotBlank())
+    @Test
+    fun downloadPopularTvList(): Unit = runBlocking {
+        vm = ShowListViewModel(null, repo, Const.ShowType.TV)
+        vm.downloadShowPopularList()
 
-        val contentStr = list.joinToString(separator = "\n")
-        prin(contentStr)
+        val list = vm.showList.waitForValue()
+
+        verify(repo).getPopularTvList(null)
+        assertNotNull(list)
+        assert(list.isNotEmpty())
+
+        val dataFromList = list.first()
+        assertEquals(tv, dataFromList)
     }
 }
