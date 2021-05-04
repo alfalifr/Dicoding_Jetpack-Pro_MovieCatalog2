@@ -22,14 +22,11 @@ object AppConfig {
 
     private var uiTestType = UiTestType.ESPRESSO
 
-    var defaultShowRemoteSource: ShowDataSource = ShowRemoteSource
+    private val defaultShowRemoteSource: ShowDataSource = ShowRemoteSource
     var defaultShowRepo: ShowRepo = ShowApiRepo(defaultShowRemoteSource)
 
     fun resetDefautlShowRepo(){
         defaultShowRepo = ShowApiRepo(defaultShowRemoteSource)
-    }
-    fun resetDefautlShowRemoteSource(){
-        defaultShowRemoteSource = ShowRemoteSource
     }
 
     var isUiAsyncTest = false

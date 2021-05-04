@@ -18,6 +18,7 @@ import org.junit.Test
 import sidev.app.course.dicoding.moviecatalog1.AndroidTestingUtil
 import sidev.app.course.dicoding.moviecatalog1.R
 import sidev.app.course.dicoding.moviecatalog1.data.datasource.ShowRemoteRetrofitSource
+import sidev.app.course.dicoding.moviecatalog1.data.repository.ShowApiRepo
 import sidev.app.course.dicoding.moviecatalog1.data.repository.ShowErrorRepo
 import sidev.app.course.dicoding.moviecatalog1.ui.activity.MainActivity
 import sidev.app.course.dicoding.moviecatalog1.util.AppConfig
@@ -30,7 +31,7 @@ class DetailActivityTest {
     @Before
     fun setup(){
         AppConfig.isUiAsyncTest = true
-        AppConfig.defaultShowRemoteSource = ShowRemoteRetrofitSource
+        AppConfig.defaultShowRepo = ShowApiRepo(ShowRemoteRetrofitSource)
         IdlingRegistry.getInstance().register(AppConfig.idlingRes)
     }
 
@@ -38,7 +39,6 @@ class DetailActivityTest {
     fun finish(){
         IdlingRegistry.getInstance().unregister(AppConfig.idlingRes)
         AppConfig.resetDefautlShowRepo()
-        AppConfig.resetDefautlShowRemoteSource()
     }
 
     @Test
