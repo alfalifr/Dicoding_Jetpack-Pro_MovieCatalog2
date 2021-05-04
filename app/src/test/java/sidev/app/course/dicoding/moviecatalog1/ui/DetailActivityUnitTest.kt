@@ -10,17 +10,19 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.After
 import org.junit.Assert.assertNotNull
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.annotation.Config
 import sidev.app.course.dicoding.moviecatalog1.R
 import sidev.app.course.dicoding.moviecatalog1.RobolectricTestingUtil
+import sidev.app.course.dicoding.moviecatalog1.datasource.ShowRemoteRetrofitSource
 import sidev.app.course.dicoding.moviecatalog1.repository.ShowDummyRepo
 import sidev.app.course.dicoding.moviecatalog1.repository.ShowErrorRepo
 import sidev.app.course.dicoding.moviecatalog1.ui.activity.DetailActivity
+import sidev.app.course.dicoding.moviecatalog1.util.AppConfig
 import sidev.app.course.dicoding.moviecatalog1.util.Const
-import sidev.app.course.dicoding.moviecatalog1.util.TestingUtil
 
 @RunWith(AndroidJUnit4::class)
 @Config(sdk = [Build.VERSION_CODES.P])
@@ -34,8 +36,8 @@ class DetailActivityUnitTest {
     private fun createActivity(): DetailActivity = Robolectric.buildActivity(
         DetailActivity::class.java,
         Intent().apply {
-            putExtra(Const.KEY_SHOW, TestingUtil.dummyShowItem)
-            putExtra(Const.KEY_TYPE, TestingUtil.dummyShowType)
+            putExtra(Const.KEY_SHOW, AppConfig.dummyShowItem)
+            putExtra(Const.KEY_TYPE, AppConfig.dummyShowType)
         }
     )
         .create()
@@ -44,16 +46,22 @@ class DetailActivityUnitTest {
         .visible()
         .get()
 
+    @Before
+    fun setup(){
+        AppConfig.defaultShowRemoteSource = ShowRemoteRetrofitSource
+    }
+
     @After
     fun finish(){
-        TestingUtil.resetDefautlShowRepo()
+        AppConfig.resetDefautlShowRepo()
+        AppConfig.resetDefautlShowRemoteSource()
     }
 
     @Test
     fun showDetail(){
         // Use dummy repo because Robolectric can't integrate with Espresso Idling Resource.
-        TestingUtil.defaultShowRepo = ShowDummyRepo
-        val data = TestingUtil.dummyShowDetail
+        AppConfig.defaultShowRepo = ShowDummyRepo
+        val data = AppConfig.dummyShowDetail
 
         val act = createActivity()
 
@@ -104,7 +112,7 @@ class DetailActivityUnitTest {
 
     @Test
     fun showDetailOnError(){
-        TestingUtil.defaultShowRepo = ShowErrorRepo
+        AppConfig.defaultShowRepo = ShowErrorRepo
         val act = createActivity()
 
         // Assert loading progress bar should be gone.

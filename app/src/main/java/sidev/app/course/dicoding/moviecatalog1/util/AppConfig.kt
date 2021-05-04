@@ -2,6 +2,9 @@ package sidev.app.course.dicoding.moviecatalog1.util
 
 import androidx.test.espresso.IdlingResource
 import androidx.test.espresso.idling.CountingIdlingResource
+import sidev.app.course.dicoding.moviecatalog1.datasource.ShowDataSource
+import sidev.app.course.dicoding.moviecatalog1.datasource.ShowRemoteRetrofitSource
+import sidev.app.course.dicoding.moviecatalog1.datasource.ShowRemoteSource
 import sidev.app.course.dicoding.moviecatalog1.model.Show
 import sidev.app.course.dicoding.moviecatalog1.model.ShowDetail
 import sidev.app.course.dicoding.moviecatalog1.repository.ShowApiRepo
@@ -10,37 +13,41 @@ import sidev.app.course.dicoding.moviecatalog1.repository.ShowRepo
 /**
  * Value inside this class should be modified in testing process, e.g. unit / instrumented testing.
  */
-object TestingUtil {
+object AppConfig {
     enum class UiTestType {
         ESPRESSO, ROBOLECTRIC
     }
 
-    private val _idlingRes by lazy { CountingIdlingResource("GLOBAL") }
-    private val _lock by lazy { CountingLatch() }
+    private val mIdlingRes by lazy { CountingIdlingResource("GLOBAL") }
+    private val mLock by lazy { CountingLatch() }
 
     private var uiTestType = UiTestType.ESPRESSO
 
-    var defaultShowRepo: ShowRepo = ShowApiRepo
+    var defaultShowRemoteSource: ShowDataSource = ShowRemoteSource
+    var defaultShowRepo: ShowRepo = ShowApiRepo(defaultShowRemoteSource)
 
     fun resetDefautlShowRepo(){
-        defaultShowRepo = ShowApiRepo
+        defaultShowRepo = ShowApiRepo(defaultShowRemoteSource)
+    }
+    fun resetDefautlShowRemoteSource(){
+        defaultShowRemoteSource = ShowRemoteSource
     }
 
     var isUiAsyncTest = false
 
     val idlingRes: IdlingResource?
-        get()= if(isUiAsyncTest) _idlingRes else null
+        get()= if(isUiAsyncTest) mIdlingRes else null
 
     fun incUiAsync(){
         if(isUiAsyncTest) when(uiTestType){
-            UiTestType.ESPRESSO -> _idlingRes.increment()
-            UiTestType.ROBOLECTRIC -> _lock.increment()
+            UiTestType.ESPRESSO -> mIdlingRes.increment()
+            UiTestType.ROBOLECTRIC -> mLock.increment()
         }
     }
     fun decUiAsync(){
         if(isUiAsyncTest) when(uiTestType){
-            UiTestType.ESPRESSO -> _idlingRes.decrement()
-            UiTestType.ROBOLECTRIC -> _lock.decrement()
+            UiTestType.ESPRESSO -> mIdlingRes.decrement()
+            UiTestType.ROBOLECTRIC -> mLock.decrement()
         }
     }
 

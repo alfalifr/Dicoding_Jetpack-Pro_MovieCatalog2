@@ -14,10 +14,11 @@ import org.junit.Rule
 import org.junit.Test
 import sidev.app.course.dicoding.moviecatalog1.AndroidTestingUtil
 import sidev.app.course.dicoding.moviecatalog1.R
+import sidev.app.course.dicoding.moviecatalog1.datasource.ShowRemoteRetrofitSource
 import sidev.app.course.dicoding.moviecatalog1.repository.ShowEmptyRepo
 import sidev.app.course.dicoding.moviecatalog1.repository.ShowErrorRepo
 import sidev.app.course.dicoding.moviecatalog1.ui.activity.MainActivity
-import sidev.app.course.dicoding.moviecatalog1.util.TestingUtil
+import sidev.app.course.dicoding.moviecatalog1.util.AppConfig
 
 class MainActivityTest {
 
@@ -26,14 +27,16 @@ class MainActivityTest {
 
     @Before
     fun setup(){
-        TestingUtil.isUiAsyncTest = true
-        IdlingRegistry.getInstance().register(TestingUtil.idlingRes)
+        AppConfig.isUiAsyncTest = true
+        AppConfig.defaultShowRemoteSource = ShowRemoteRetrofitSource
+        IdlingRegistry.getInstance().register(AppConfig.idlingRes)
     }
 
     @After
     fun finish(){
-        IdlingRegistry.getInstance().unregister(TestingUtil.idlingRes)
-        TestingUtil.resetDefautlShowRepo()
+        IdlingRegistry.getInstance().unregister(AppConfig.idlingRes)
+        AppConfig.resetDefautlShowRepo()
+        AppConfig.resetDefautlShowRemoteSource()
     }
 
     @Test
@@ -82,7 +85,7 @@ class MainActivityTest {
 
     @Test
     fun getShowListOnError(){
-        TestingUtil.defaultShowRepo = ShowErrorRepo
+        AppConfig.defaultShowRepo = ShowErrorRepo
         // Assert RecyclerView should be gone.
         onView(withId(R.id.rv)).check(
             ViewAssertions.matches(
@@ -108,7 +111,7 @@ class MainActivityTest {
 
     @Test
     fun getShowListOnNoData(){
-        TestingUtil.defaultShowRepo = ShowEmptyRepo
+        AppConfig.defaultShowRepo = ShowEmptyRepo
         // Assert RecyclerView should be gone.
         onView(withId(R.id.rv)).check(
             ViewAssertions.matches(

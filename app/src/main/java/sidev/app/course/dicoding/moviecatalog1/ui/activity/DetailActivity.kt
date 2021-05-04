@@ -8,17 +8,16 @@ import sidev.app.course.dicoding.moviecatalog1.R
 import sidev.app.course.dicoding.moviecatalog1.databinding.DetailPageBinding
 import sidev.app.course.dicoding.moviecatalog1.model.Show
 import sidev.app.course.dicoding.moviecatalog1.util.Const
-import sidev.app.course.dicoding.moviecatalog1.util.TestingUtil
+import sidev.app.course.dicoding.moviecatalog1.util.AppConfig
 import sidev.app.course.dicoding.moviecatalog1.util.Util.getDurationString
 import sidev.app.course.dicoding.moviecatalog1.viewmodel.ShowDetailViewModel
-import java.lang.Exception
 
 class DetailActivity: AppCompatActivity() {
     private lateinit var binding: DetailPageBinding
     private lateinit var show: Show
     private lateinit var showType: Const.ShowType
     private lateinit var vm: ShowDetailViewModel
-    private val showRepo = TestingUtil.defaultShowRepo
+    private val showRepo = AppConfig.defaultShowRepo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,14 +44,14 @@ class DetailActivity: AppCompatActivity() {
 
         vm = ShowDetailViewModel.getInstance(this, application, showRepo, showType).apply {
             onPreAsyncTask {
-                TestingUtil.incUiAsync()
+                AppConfig.incUiAsync()
                 showError(false)
                 showLoading()
             }
             onCallNotSuccess { code, e ->
                 showLoading(false)
                 showError(true, code, e)
-                TestingUtil.decUiAsync()
+                AppConfig.decUiAsync()
             }
             showDetail.observe(this@DetailActivity){
                 if(it != null){
@@ -71,7 +70,7 @@ class DetailActivity: AppCompatActivity() {
                 }
                 showError(false)
                 showLoading(false)
-                TestingUtil.decUiAsync()
+                AppConfig.decUiAsync()
             }
             downloadShowDetail(show.id)
         }
@@ -89,7 +88,7 @@ class DetailActivity: AppCompatActivity() {
         }
     }
 
-    private fun showError(show: Boolean = true, code: Int = -1, e: Exception? = null) = binding.apply {
+    private fun showError(show: Boolean = true, code: Int = -1, e: Throwable? = null) = binding.apply {
         if(show){
             tvOverview.visibility= View.GONE
             tvOverviewContent.visibility= View.GONE

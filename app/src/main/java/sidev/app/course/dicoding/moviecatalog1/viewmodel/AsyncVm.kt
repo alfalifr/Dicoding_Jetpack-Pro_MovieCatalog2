@@ -8,7 +8,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.Job
 import org.jetbrains.anko.runOnUiThread
-import java.lang.Exception
 
 /**
  * Template for all ViewModel in this project.
@@ -25,7 +24,7 @@ open class AsyncVm(app: Application?): ViewModel() {
      * Executed before any async task in `this` runs.
      */
     private var onPreAsyncTask: (() -> Unit)?= null
-    private var onCallNotSuccess: ((code: Int, e: Exception?) -> Unit)?= null
+    private var onCallNotSuccess: ((code: Int, e: Throwable?) -> Unit)?= null
 
     /**
      * This method will be called when this ViewModel is no longer used and will be destroyed.
@@ -45,13 +44,13 @@ open class AsyncVm(app: Application?): ViewModel() {
     fun onPreAsyncTask(f: (() -> Unit)?){
         onPreAsyncTask= f
     }
-    fun onCallNotSuccess(f: ((code: Int, e: Exception?) -> Unit)?){
+    fun onCallNotSuccess(f: ((code: Int, e: Throwable?) -> Unit)?){
         onCallNotSuccess= f
     }
     protected fun doOnPreAsyncTask(){
         onPreAsyncTask?.also { ctx?.runOnUiThread { it() } }
     }
-    protected fun doCallNotSuccess(code: Int, e: Exception?){
+    protected fun doCallNotSuccess(code: Int, e: Throwable?){
         onCallNotSuccess?.also { ctx?.runOnUiThread { it(code, e) } }
     }
 }

@@ -17,9 +17,10 @@ import org.junit.Rule
 import org.junit.Test
 import sidev.app.course.dicoding.moviecatalog1.AndroidTestingUtil
 import sidev.app.course.dicoding.moviecatalog1.R
+import sidev.app.course.dicoding.moviecatalog1.datasource.ShowRemoteRetrofitSource
 import sidev.app.course.dicoding.moviecatalog1.repository.ShowErrorRepo
 import sidev.app.course.dicoding.moviecatalog1.ui.activity.MainActivity
-import sidev.app.course.dicoding.moviecatalog1.util.TestingUtil
+import sidev.app.course.dicoding.moviecatalog1.util.AppConfig
 
 class DetailActivityTest {
 
@@ -28,14 +29,16 @@ class DetailActivityTest {
 
     @Before
     fun setup(){
-        TestingUtil.isUiAsyncTest = true
-        IdlingRegistry.getInstance().register(TestingUtil.idlingRes)
+        AppConfig.isUiAsyncTest = true
+        AppConfig.defaultShowRemoteSource = ShowRemoteRetrofitSource
+        IdlingRegistry.getInstance().register(AppConfig.idlingRes)
     }
 
     @After
     fun finish(){
-        IdlingRegistry.getInstance().unregister(TestingUtil.idlingRes)
-        TestingUtil.resetDefautlShowRepo()
+        IdlingRegistry.getInstance().unregister(AppConfig.idlingRes)
+        AppConfig.resetDefautlShowRepo()
+        AppConfig.resetDefautlShowRemoteSource()
     }
 
     @Test
@@ -109,7 +112,7 @@ class DetailActivityTest {
                 0,
                 AndroidTestingUtil.ViewActions.clickAndBefore {
                     // Before moving to detail page, switch the repo first.
-                    TestingUtil.defaultShowRepo = ShowErrorRepo
+                    AppConfig.defaultShowRepo = ShowErrorRepo
                 }
             )
         )

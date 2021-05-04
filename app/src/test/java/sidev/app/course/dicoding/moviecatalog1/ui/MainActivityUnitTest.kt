@@ -10,19 +10,22 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.After
 import org.junit.Assert.assertNotNull
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
+import org.robolectric.annotation.Config
 import sidev.app.course.dicoding.moviecatalog1.R
 import sidev.app.course.dicoding.moviecatalog1.RobolectricTestingUtil
+import sidev.app.course.dicoding.moviecatalog1.datasource.ShowRemoteRetrofitSource
 import sidev.app.course.dicoding.moviecatalog1.repository.ShowDummyRepo
 import sidev.app.course.dicoding.moviecatalog1.repository.ShowEmptyRepo
 import sidev.app.course.dicoding.moviecatalog1.repository.ShowErrorRepo
 import sidev.app.course.dicoding.moviecatalog1.ui.activity.MainActivity
-import sidev.app.course.dicoding.moviecatalog1.util.TestingUtil
+import sidev.app.course.dicoding.moviecatalog1.util.AppConfig
 
 @RunWith(AndroidJUnit4::class)
-@org.robolectric.annotation.Config(sdk = [Build.VERSION_CODES.P])
+@Config(sdk = [Build.VERSION_CODES.P])
 class MainActivityUnitTest {
 
     val textMatcher = RobolectricTestingUtil.ViewMatchers::textMatchesAndDisplayed
@@ -37,16 +40,22 @@ class MainActivityUnitTest {
         .visible()
         .get()
 
+    @Before
+    fun setup(){
+        AppConfig.defaultShowRemoteSource = ShowRemoteRetrofitSource
+    }
+
     @After
     fun finish(){
-        TestingUtil.resetDefautlShowRepo()
+        AppConfig.resetDefautlShowRepo()
+        AppConfig.resetDefautlShowRemoteSource()
     }
 
     @Test
     fun getShowList(){
         // Use dummy repo because Robolectric can't integrate with Espresso Idling Resource.
-        TestingUtil.defaultShowRepo = ShowDummyRepo
-        val data = TestingUtil.dummyShowItem
+        AppConfig.defaultShowRepo = ShowDummyRepo
+        val data = AppConfig.dummyShowItem
 
         val act = createActivity()
 
@@ -85,7 +94,7 @@ class MainActivityUnitTest {
 
     @Test
     fun getShowListOnError(){
-        TestingUtil.defaultShowRepo = ShowErrorRepo
+        AppConfig.defaultShowRepo = ShowErrorRepo
         val act = createActivity()
 
         // Assert RecyclerView should be gone but not null.
@@ -107,7 +116,7 @@ class MainActivityUnitTest {
 
     @Test
     fun getShowListOnNoData(){
-        TestingUtil.defaultShowRepo = ShowEmptyRepo
+        AppConfig.defaultShowRepo = ShowEmptyRepo
         val act = createActivity()
 
         // Assert RecyclerView should be gone but not null.

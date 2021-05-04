@@ -19,16 +19,20 @@ object Const {
         abstract fun getPopularUrl(lang: String = "en-US", page: Int = 1): String
     }
 
-    private const val ENDPOINT_ROOT = "https://api.themoviedb.org/3"
-    private const val ENDPOINT_MOVIE = "$ENDPOINT_ROOT/movie"
-    private const val ENDPOINT_TV = "$ENDPOINT_ROOT/tv"
+    const val ENDPOINT_ROOT = "https://api.themoviedb.org/3"
+    const val ENDPOINT_MOVIE = "$ENDPOINT_ROOT/movie"
+    const val ENDPOINT_TV = "$ENDPOINT_ROOT/tv"
+    //const val ENDPOINT_MOVIE_POPULAR = "$ENDPOINT_MOVIE/popular"
+    //const val ENDPOINT_TV_POPULAR = "$ENDPOINT_MOVIE/popular"
+    const val PATH_TV_POPULAR = "tv/popular"
+    const val PATH_MOVIE_POPULAR = "movie/popular"
     private const val ENDPOINT_PUBLIC = "https://themoviedb.org"
 
     private const val ENDPOINT_IMG = "$ENDPOINT_PUBLIC/t/p"
     private const val ENDPOINT_IMG_300x450 = "$ENDPOINT_IMG/w300_and_h450_bestv2"
     private const val ENDPOINT_IMG_533x300 = "$ENDPOINT_IMG/w533_and_h300_bestv2"
 
-    private val API_KEY: String
+    val API_KEY: String
         get()= BuildConfig.API_KEY
 
     fun getImgUrl_300x450(fileName: String): String = "$ENDPOINT_IMG_300x450/$fileName"
@@ -46,6 +50,10 @@ object Const {
     fun getTvPopularUrl(lang: String = "en-US", page: Int = 1): String =
         "$ENDPOINT_TV/popular?api_key=$API_KEY&language=$lang&page=$page"
 
+
+    const val KEY_API_KEY = "api_key"
+    const val KEY_PAGE = "page"
+    const val KEY_POPULAR = "popular"
 
     const val KEY_TYPE = "type"
     const val KEY_SHOW = "show"

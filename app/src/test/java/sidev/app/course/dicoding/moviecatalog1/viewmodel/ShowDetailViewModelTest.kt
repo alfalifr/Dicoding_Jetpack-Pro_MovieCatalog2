@@ -6,22 +6,23 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import sidev.app.course.dicoding.moviecatalog1.UnitTestingUtil.waitForValue
-import sidev.app.course.dicoding.moviecatalog1.repository.ShowApiRepo
+import sidev.app.course.dicoding.moviecatalog1.repository.ShowRepo
 import sidev.app.course.dicoding.moviecatalog1.util.Const
-import sidev.app.course.dicoding.moviecatalog1.util.TestingUtil
+import sidev.app.course.dicoding.moviecatalog1.util.AppConfig
 import sidev.lib.console.prin
 import sidev.lib.console.prine
 
 class ShowDetailViewModelTest {
 
     private lateinit var vm: ShowDetailViewModel
+    private val repo: ShowRepo = AppConfig.defaultShowRepo
 
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Before
     fun setup(){
-        vm = ShowDetailViewModel(null, ShowApiRepo, Const.ShowType.MOVIE)
+        vm = ShowDetailViewModel(null, repo, Const.ShowType.MOVIE)
     }
 
     @Test
@@ -29,7 +30,7 @@ class ShowDetailViewModelTest {
         vm.onCallNotSuccess { code, e ->
             prine("onCallNotSuccess code= $code e= $e")
         }
-        vm.downloadShowDetail(TestingUtil.dummyShowItem.id)
+        vm.downloadShowDetail(AppConfig.dummyShowItem.id)
 
         val data = vm.showDetail.waitForValue()
         assertNotNull(data)

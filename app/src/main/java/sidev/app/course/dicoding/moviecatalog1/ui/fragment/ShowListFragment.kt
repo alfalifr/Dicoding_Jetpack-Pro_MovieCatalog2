@@ -11,10 +11,9 @@ import sidev.app.course.dicoding.moviecatalog1.databinding.PageRvBinding
 import sidev.app.course.dicoding.moviecatalog1.ui.activity.DetailActivity
 import sidev.app.course.dicoding.moviecatalog1.ui.adapter.ShowAdp
 import sidev.app.course.dicoding.moviecatalog1.util.Const
-import sidev.app.course.dicoding.moviecatalog1.util.TestingUtil
+import sidev.app.course.dicoding.moviecatalog1.util.AppConfig
 import sidev.app.course.dicoding.moviecatalog1.viewmodel.ShowListViewModel
 import sidev.lib.android.std.tool.util.`fun`.startAct
-import java.lang.Exception
 
 
 class ShowListFragment: Fragment() {
@@ -22,7 +21,7 @@ class ShowListFragment: Fragment() {
     private lateinit var adp: ShowAdp
     private lateinit var vm: ShowListViewModel
     private lateinit var type: Const.ShowType
-    private val showRepo = TestingUtil.defaultShowRepo
+    private val showRepo = AppConfig.defaultShowRepo
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,20 +56,20 @@ class ShowListFragment: Fragment() {
 
         vm = ShowListViewModel.getInstance(this, requireActivity().application, showRepo, type).apply {
             onPreAsyncTask {
-                TestingUtil.incUiAsync()
+                AppConfig.incUiAsync()
                 showNoData(false)
                 showLoading()
             }
             onCallNotSuccess { code, e ->
                 showLoading(false)
                 showDataError(true, code, e)
-                TestingUtil.decUiAsync()
+                AppConfig.decUiAsync()
             }
             showList.observe(this@ShowListFragment) {
                 adp.dataList = it
                 showLoading(false)
                 showNoData(it == null || it.isEmpty())
-                TestingUtil.decUiAsync()
+                AppConfig.decUiAsync()
             }
             downloadShowPopularList(forceDownload = true)
         }
@@ -82,7 +81,7 @@ class ShowListFragment: Fragment() {
     }
 
     @Suppress("SameParameterValue")
-    private fun showDataError(show: Boolean = true, code: Int = -1, e: Exception? = null) {
+    private fun showDataError(show: Boolean = true, code: Int = -1, e: Throwable? = null) {
         showDataAnomaly(show)
         val eClass = if(e != null) e::class.java.simpleName else "null"
         binding.tvNoData.text = getString(R.string.error_data, "$eClass ($code)", e?.message ?: "null")

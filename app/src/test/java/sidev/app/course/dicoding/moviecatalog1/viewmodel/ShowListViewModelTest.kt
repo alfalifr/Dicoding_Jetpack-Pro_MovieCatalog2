@@ -7,21 +7,23 @@ import org.junit.Test
 
 import org.junit.Rule
 import sidev.app.course.dicoding.moviecatalog1.UnitTestingUtil.waitForValue
-import sidev.app.course.dicoding.moviecatalog1.repository.ShowApiRepo
+import sidev.app.course.dicoding.moviecatalog1.repository.ShowRepo
 import sidev.app.course.dicoding.moviecatalog1.util.Const
+import sidev.app.course.dicoding.moviecatalog1.util.AppConfig
 import sidev.lib.console.prin
 import sidev.lib.console.prine
 
 class ShowListViewModelTest {
 
     private lateinit var vm: ShowListViewModel
+    private val repo: ShowRepo = AppConfig.defaultShowRepo
 
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Before
     fun setup(){
-        vm = ShowListViewModel(null, ShowApiRepo, Const.ShowType.values().random())
+        vm = ShowListViewModel(null, repo, Const.ShowType.values().random())
     }
 
     @Test

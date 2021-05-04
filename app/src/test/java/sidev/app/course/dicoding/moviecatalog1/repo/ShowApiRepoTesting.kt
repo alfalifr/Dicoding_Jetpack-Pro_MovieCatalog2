@@ -4,13 +4,14 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Test
+import sidev.app.course.dicoding.moviecatalog1.datasource.ShowRemoteRetrofitSource
 import sidev.app.course.dicoding.moviecatalog1.model.Show
 import sidev.app.course.dicoding.moviecatalog1.repository.ShowApiRepo
 import sidev.app.course.dicoding.moviecatalog1.repository.Success
 
 class ShowApiRepoTesting {
 
-    private val repo = ShowApiRepo
+    private val repo = ShowApiRepo(ShowRemoteRetrofitSource)
 
     @Test
     fun getPopularMovieList(): Unit = runBlocking {

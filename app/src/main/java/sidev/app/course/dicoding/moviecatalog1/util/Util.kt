@@ -11,23 +11,74 @@ import com.android.volley.toolbox.HttpHeaderParser
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.gson.Gson
 import com.google.gson.JsonObject
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import okhttp3.OkHttpClient
 import org.jetbrains.anko.runOnUiThread
 import org.jetbrains.anko.toast
+import retrofit2.Call
+import retrofit2.Callback
 import sidev.app.course.dicoding.moviecatalog1.R
 import sidev.app.course.dicoding.moviecatalog1.model.ShowDetail
+import sidev.app.course.dicoding.moviecatalog1.repository.Failure
+import sidev.app.course.dicoding.moviecatalog1.repository.Result
+import sidev.app.course.dicoding.moviecatalog1.repository.Success
 import sidev.lib.android.std.tool.util._NetworkUtil
 import sidev.lib.structure.data.value.varOf
 import java.io.IOException
+import java.lang.IllegalStateException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 object Util {
+    /**
+     * Gson singleton for this project.
+     */
+    val gson: Gson by lazy { Gson() }
+
+
+    suspend fun <T> Call<T>.get(): Result<T> = suspendCoroutine { continuation ->
+        onResult {
+            continuation.resume(it)
+        }
+    }
+
+
+    /**
+     * Convenient way to give callback to retrofit [Call].
+     */
+    fun <T> Call<T>.onResult(c: (Result<T>) -> Unit) {
+        enqueue(object : Callback<T> {
+            /**
+             * Invoked for a received HTTP response.
+             *
+             *
+             * Note: An HTTP response may still indicate an application-level failure such as a 404 or 500.
+             * Call [Response.isSuccessful] to determine if the response indicates success.
+             */
+            override fun onResponse(call: Call<T>, response: retrofit2.Response<T>) {
+                c(
+                    if(response.isSuccessful){
+                        response.body()?.let { Success(it) }
+                            ?: Failure(response.code(), IllegalStateException("Can't instantiate class 'T'"))
+                    } else
+                        Failure(response.code(), IOException(response.message()))
+                )
+            }
+
+            /**
+             * Invoked when a network exception occurred talking to the server or when an unexpected exception
+             * occurred creating the request or processing the response.
+             */
+            override fun onFailure(call: Call<T>, t: Throwable) {
+                c(Failure(1, t))
+            }
+        })
+    }
+
     fun httpGet(
         c: Context?, // Nullable so it is easier to unit-test this.
         url: String,
