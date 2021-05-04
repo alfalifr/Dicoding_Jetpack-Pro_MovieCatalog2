@@ -1,21 +1,21 @@
-package sidev.app.course.dicoding.moviecatalog1.datasource
+package sidev.app.course.dicoding.moviecatalog1.data.datasource
 
 import android.content.Context
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
-import sidev.app.course.dicoding.moviecatalog1.model.Show
-import sidev.app.course.dicoding.moviecatalog1.model.ShowDetail
-import sidev.app.course.dicoding.moviecatalog1.repository.Failure
+import sidev.app.course.dicoding.moviecatalog1.data.model.Show
+import sidev.app.course.dicoding.moviecatalog1.data.model.ShowDetail
 import sidev.app.course.dicoding.moviecatalog1.util.Const
 import sidev.app.course.dicoding.moviecatalog1.util.Util
 import sidev.app.course.dicoding.moviecatalog1.util.Util.getDouble
 import sidev.app.course.dicoding.moviecatalog1.util.Util.getIntOrNull
 import sidev.app.course.dicoding.moviecatalog1.util.Util.getString
-import sidev.app.course.dicoding.moviecatalog1.repository.Result
-import sidev.app.course.dicoding.moviecatalog1.repository.Success
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
+import sidev.app.course.dicoding.moviecatalog1.data.Result
+import sidev.app.course.dicoding.moviecatalog1.data.Success
+import sidev.app.course.dicoding.moviecatalog1.data.Failure
 
 /**
  * Non Retrofit remote data source for [Show] and [ShowDetail].

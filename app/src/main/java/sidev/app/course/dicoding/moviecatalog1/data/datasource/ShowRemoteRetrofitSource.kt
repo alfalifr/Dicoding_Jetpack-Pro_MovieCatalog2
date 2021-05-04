@@ -1,15 +1,15 @@
-package sidev.app.course.dicoding.moviecatalog1.datasource
+package sidev.app.course.dicoding.moviecatalog1.data.datasource
 
 import android.content.Context
-import sidev.app.course.dicoding.moviecatalog1.api.AppRetrofit
-import sidev.app.course.dicoding.moviecatalog1.model.Show
-import sidev.app.course.dicoding.moviecatalog1.model.ShowDetail
-import sidev.app.course.dicoding.moviecatalog1.repository.Failure
-import sidev.app.course.dicoding.moviecatalog1.repository.Result
-import sidev.app.course.dicoding.moviecatalog1.repository.Success
+import sidev.app.course.dicoding.moviecatalog1.data.api.AppRetrofit
+import sidev.app.course.dicoding.moviecatalog1.data.model.Show
+import sidev.app.course.dicoding.moviecatalog1.data.model.ShowDetail
 import sidev.app.course.dicoding.moviecatalog1.util.Const
 import sidev.app.course.dicoding.moviecatalog1.util.Util.get
 import sidev.lib.`val`.SuppressLiteral
+import sidev.app.course.dicoding.moviecatalog1.data.Result
+import sidev.app.course.dicoding.moviecatalog1.data.Success
+import sidev.app.course.dicoding.moviecatalog1.data.Failure
 
 object ShowRemoteRetrofitSource: ShowDataSource {
     override suspend fun getPopularMovieList(c: Context?): Result<List<Show>> = getPopularShowList(

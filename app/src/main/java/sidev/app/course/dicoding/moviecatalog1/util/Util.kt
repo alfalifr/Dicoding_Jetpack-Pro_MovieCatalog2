@@ -20,10 +20,10 @@ import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
 import sidev.app.course.dicoding.moviecatalog1.R
-import sidev.app.course.dicoding.moviecatalog1.model.ShowDetail
-import sidev.app.course.dicoding.moviecatalog1.repository.Failure
-import sidev.app.course.dicoding.moviecatalog1.repository.Result
-import sidev.app.course.dicoding.moviecatalog1.repository.Success
+import sidev.app.course.dicoding.moviecatalog1.data.model.ShowDetail
+import sidev.app.course.dicoding.moviecatalog1.data.Result
+import sidev.app.course.dicoding.moviecatalog1.data.Failure
+import sidev.app.course.dicoding.moviecatalog1.data.Success
 import sidev.lib.android.std.tool.util._NetworkUtil
 import sidev.lib.structure.data.value.varOf
 import java.io.IOException

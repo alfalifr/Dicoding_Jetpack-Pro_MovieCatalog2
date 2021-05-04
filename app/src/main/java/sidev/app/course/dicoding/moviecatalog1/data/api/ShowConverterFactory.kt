@@ -1,12 +1,12 @@
-package sidev.app.course.dicoding.moviecatalog1.api
+package sidev.app.course.dicoding.moviecatalog1.data.api
 
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import sidev.app.course.dicoding.moviecatalog1.model.ShowDetail
-import sidev.app.course.dicoding.moviecatalog1.model.ShowDetailConverter
+import sidev.app.course.dicoding.moviecatalog1.data.model.ShowDetail
+import sidev.app.course.dicoding.moviecatalog1.data.model.ShowDetailConverter
 import java.lang.reflect.Type
 
 

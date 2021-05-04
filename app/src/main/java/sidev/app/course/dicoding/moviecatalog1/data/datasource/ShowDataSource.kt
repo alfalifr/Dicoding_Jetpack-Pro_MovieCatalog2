@@ -1,9 +1,9 @@
-package sidev.app.course.dicoding.moviecatalog1.datasource
+package sidev.app.course.dicoding.moviecatalog1.data.datasource
 
 import android.content.Context
-import sidev.app.course.dicoding.moviecatalog1.model.Show
-import sidev.app.course.dicoding.moviecatalog1.model.ShowDetail
-import sidev.app.course.dicoding.moviecatalog1.repository.Result
+import sidev.app.course.dicoding.moviecatalog1.data.model.Show
+import sidev.app.course.dicoding.moviecatalog1.data.model.ShowDetail
+import sidev.app.course.dicoding.moviecatalog1.data.Result
 
 interface ShowDataSource {
     suspend fun getPopularMovieList(c: Context?): Result<List<Show>>

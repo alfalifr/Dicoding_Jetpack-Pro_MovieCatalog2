@@ -1,9 +1,11 @@
-package sidev.app.course.dicoding.moviecatalog1.repository
+package sidev.app.course.dicoding.moviecatalog1.data.repository
 
 import android.content.Context
-import sidev.app.course.dicoding.moviecatalog1.model.Show
-import sidev.app.course.dicoding.moviecatalog1.model.ShowDetail
+import sidev.app.course.dicoding.moviecatalog1.data.model.Show
+import sidev.app.course.dicoding.moviecatalog1.data.model.ShowDetail
 import sidev.app.course.dicoding.moviecatalog1.util.AppConfig
+import sidev.app.course.dicoding.moviecatalog1.data.Result
+import sidev.app.course.dicoding.moviecatalog1.data.Success
 
 object ShowEmptyRepo: ShowRepo {
     override suspend fun getPopularMovieList(c: Context?): Result<List<Show>> = Success(emptyList())

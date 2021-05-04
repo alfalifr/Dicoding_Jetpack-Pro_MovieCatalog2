@@ -22,8 +22,6 @@ object Const {
     const val ENDPOINT_ROOT = "https://api.themoviedb.org/3"
     private const val ENDPOINT_MOVIE = "$ENDPOINT_ROOT/movie"
     private const val ENDPOINT_TV = "$ENDPOINT_ROOT/tv"
-    //const val ENDPOINT_MOVIE_POPULAR = "$ENDPOINT_MOVIE/popular"
-    //const val ENDPOINT_TV_POPULAR = "$ENDPOINT_MOVIE/popular"
     const val PATH_TV_POPULAR = "tv/popular"
     const val PATH_MOVIE_POPULAR = "movie/popular"
     private const val ENDPOINT_PUBLIC = "https://themoviedb.org"

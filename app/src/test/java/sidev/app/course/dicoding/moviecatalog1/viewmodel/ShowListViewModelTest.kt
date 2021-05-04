@@ -10,14 +10,15 @@ import org.junit.Test
 import org.mockito.Mockito
 import org.mockito.Mockito.verify
 import sidev.app.course.dicoding.moviecatalog1.UnitTestingUtil.waitForValue
-import sidev.app.course.dicoding.moviecatalog1.repository.ShowRepo
-import sidev.app.course.dicoding.moviecatalog1.repository.Success
+import sidev.app.course.dicoding.moviecatalog1.data.repository.ShowRepo
+import sidev.app.course.dicoding.moviecatalog1.data.Success
 import sidev.app.course.dicoding.moviecatalog1.util.AppConfig
 import sidev.app.course.dicoding.moviecatalog1.util.Const
 
 class ShowListViewModelTest {
 
     companion object {
+        // These props are lazy val so there's no way the value will be changed after initialization.
         private val repo: ShowRepo by lazy { Mockito.mock(ShowRepo::class.java) }
 
         private val movie = AppConfig.dummyMovieItem

@@ -1,4 +1,4 @@
-package sidev.app.course.dicoding.moviecatalog1.api
+package sidev.app.course.dicoding.moviecatalog1.data.api
 
 import retrofit2.Retrofit
 import sidev.app.course.dicoding.moviecatalog1.util.Const

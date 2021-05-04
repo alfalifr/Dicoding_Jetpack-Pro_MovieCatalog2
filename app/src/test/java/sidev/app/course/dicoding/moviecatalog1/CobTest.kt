@@ -2,9 +2,9 @@ package sidev.app.course.dicoding.moviecatalog1
 
 import org.junit.Test
 import retrofit2.Retrofit
-import sidev.app.course.dicoding.moviecatalog1.api.ShowApi
-import sidev.app.course.dicoding.moviecatalog1.api.ShowConverterFactory
-import sidev.app.course.dicoding.moviecatalog1.repository.Success
+import sidev.app.course.dicoding.moviecatalog1.data.api.ShowApi
+import sidev.app.course.dicoding.moviecatalog1.data.api.ShowConverterFactory
+import sidev.app.course.dicoding.moviecatalog1.data.Success
 import sidev.app.course.dicoding.moviecatalog1.util.Const
 import sidev.app.course.dicoding.moviecatalog1.util.Util.onResult
 import sidev.lib.console.prine

@@ -16,8 +16,8 @@ import org.robolectric.Robolectric
 import org.robolectric.annotation.Config
 import sidev.app.course.dicoding.moviecatalog1.R
 import sidev.app.course.dicoding.moviecatalog1.RobolectricTestingUtil
-import sidev.app.course.dicoding.moviecatalog1.repository.ShowDummyRepo
-import sidev.app.course.dicoding.moviecatalog1.repository.ShowErrorRepo
+import sidev.app.course.dicoding.moviecatalog1.data.repository.ShowDummyRepo
+import sidev.app.course.dicoding.moviecatalog1.data.repository.ShowErrorRepo
 import sidev.app.course.dicoding.moviecatalog1.ui.activity.DetailActivity
 import sidev.app.course.dicoding.moviecatalog1.util.AppConfig
 import sidev.app.course.dicoding.moviecatalog1.util.Const

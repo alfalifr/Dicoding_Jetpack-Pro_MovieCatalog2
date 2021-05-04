@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import sidev.app.course.dicoding.moviecatalog1.R
 import sidev.app.course.dicoding.moviecatalog1.databinding.DetailPageBinding
-import sidev.app.course.dicoding.moviecatalog1.model.Show
+import sidev.app.course.dicoding.moviecatalog1.data.model.Show
 import sidev.app.course.dicoding.moviecatalog1.util.Const
 import sidev.app.course.dicoding.moviecatalog1.util.AppConfig
 import sidev.app.course.dicoding.moviecatalog1.util.Util.getDurationString

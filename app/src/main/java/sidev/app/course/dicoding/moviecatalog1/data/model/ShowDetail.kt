@@ -1,4 +1,4 @@
-package sidev.app.course.dicoding.moviecatalog1.model
+package sidev.app.course.dicoding.moviecatalog1.data.model
 
 import sidev.app.course.dicoding.moviecatalog1.util.Const
 import java.io.Serializable

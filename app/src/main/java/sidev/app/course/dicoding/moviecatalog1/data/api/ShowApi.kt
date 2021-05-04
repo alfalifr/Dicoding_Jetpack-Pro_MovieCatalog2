@@ -1,11 +1,11 @@
-package sidev.app.course.dicoding.moviecatalog1.api
+package sidev.app.course.dicoding.moviecatalog1.data.api
 
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
-import sidev.app.course.dicoding.moviecatalog1.model.ShowDetail
-import sidev.app.course.dicoding.moviecatalog1.model.ShowListResponse
+import sidev.app.course.dicoding.moviecatalog1.data.model.ShowDetail
+import sidev.app.course.dicoding.moviecatalog1.data.model.ShowListResponse
 import sidev.app.course.dicoding.moviecatalog1.util.Const
 
 interface ShowApi {

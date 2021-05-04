@@ -1,4 +1,4 @@
-package sidev.app.course.dicoding.moviecatalog1.model
+package sidev.app.course.dicoding.moviecatalog1.data.model
 
 
 data class ShowListResponse (

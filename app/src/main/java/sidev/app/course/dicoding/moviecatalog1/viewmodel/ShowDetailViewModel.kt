@@ -5,10 +5,10 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import sidev.app.course.dicoding.moviecatalog1.model.ShowDetail
-import sidev.app.course.dicoding.moviecatalog1.repository.Failure
-import sidev.app.course.dicoding.moviecatalog1.repository.ShowRepo
-import sidev.app.course.dicoding.moviecatalog1.repository.Success
+import sidev.app.course.dicoding.moviecatalog1.data.model.ShowDetail
+import sidev.app.course.dicoding.moviecatalog1.data.repository.ShowRepo
+import sidev.app.course.dicoding.moviecatalog1.data.Success
+import sidev.app.course.dicoding.moviecatalog1.data.Failure
 import sidev.app.course.dicoding.moviecatalog1.util.Const
 import sidev.lib.`val`.SuppressLiteral
 

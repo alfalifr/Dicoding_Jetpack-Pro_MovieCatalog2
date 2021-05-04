@@ -1,4 +1,4 @@
-package sidev.app.course.dicoding.moviecatalog1.repository
+package sidev.app.course.dicoding.moviecatalog1.data
 
 sealed class Result<T>
 

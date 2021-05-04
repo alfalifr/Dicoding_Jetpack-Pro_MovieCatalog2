@@ -17,8 +17,8 @@ import org.junit.Rule
 import org.junit.Test
 import sidev.app.course.dicoding.moviecatalog1.AndroidTestingUtil
 import sidev.app.course.dicoding.moviecatalog1.R
-import sidev.app.course.dicoding.moviecatalog1.datasource.ShowRemoteRetrofitSource
-import sidev.app.course.dicoding.moviecatalog1.repository.ShowErrorRepo
+import sidev.app.course.dicoding.moviecatalog1.data.datasource.ShowRemoteRetrofitSource
+import sidev.app.course.dicoding.moviecatalog1.data.repository.ShowErrorRepo
 import sidev.app.course.dicoding.moviecatalog1.ui.activity.MainActivity
 import sidev.app.course.dicoding.moviecatalog1.util.AppConfig
 

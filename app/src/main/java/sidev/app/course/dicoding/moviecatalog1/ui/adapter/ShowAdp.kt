@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import sidev.app.course.dicoding.moviecatalog1.R
 import sidev.app.course.dicoding.moviecatalog1.databinding.ItemMainListBinding
-import sidev.app.course.dicoding.moviecatalog1.model.Show
+import sidev.app.course.dicoding.moviecatalog1.data.model.Show
 
 class ShowAdp: RecyclerView.Adapter<ShowAdp.ViewHolder>() {
 
