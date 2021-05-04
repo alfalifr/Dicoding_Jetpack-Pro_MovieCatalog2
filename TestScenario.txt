@@ -53,10 +53,16 @@
             □ downloadMovieDetail:
                 ® Assert ShowRepo.getMovieDetail(null, data.id) is invoked.
                 ® Assert data from LiveData equals dummy movie detail data.
-        § ShowListViewModelTest:
-            □ downloadShowPopularList:
+            □ downloadTvDetail:
                 ® Assert ShowRepo.getTvDetail(null, data.id) is invoked.
-                ® Assert data from LiveData equals dummy tv detail data.
+                ® Assert data from LiveData equals dummy tv detail data
+        § ShowListViewModelTest:
+            □ downloadPopularMovieList:
+                ® Assert ShowRepo.getPopularMovieList(null) is invoked.
+                ® Assert data from LiveData equals dummy movie data.
+            □ downloadPopularTvList:
+                ® Assert ShowRepo.getPopularTvList(null) is invoked.
+                ® Assert data from LiveData equals dummy tv data.
 
     ○ Unit Testing (Robolectric):
         § DetailActivityUnitTest:
