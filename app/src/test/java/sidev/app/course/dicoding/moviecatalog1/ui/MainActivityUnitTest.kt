@@ -41,7 +41,6 @@ class MainActivityUnitTest {
     @After
     fun finish(){
         AppConfig.resetDefautlShowRepo()
-        AppConfig.resetDefautlShowRemoteSource()
     }
 
     @Test

@@ -17,6 +17,7 @@
         android:layout_alignParentBottom="true"
         app:labelVisibilityMode="labeled"
         app:itemIconTint="@color/colorPrimary"
+        app:itemTextColor="@drawable/selector_bnv_item_text_color"
         app:menu="@menu/main_bnv"/>
 
 </RelativeLayout>
